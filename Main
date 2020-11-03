@@ -1,0 +1,49 @@
+import pyautogui
+pyautogui.moveTo(1000,-1500, duration = 1)
+pyautogui.click(pyautogui.position())
+from pynput.keyboard import *
+delay = 0.5
+resume_key = Key.shift
+pause_key = Key.tab
+exit_key = Key.esc
+pause = True
+running = True
+def on_press(key):
+    global running, pause
+    if key == resume_key:
+        pause = False
+        print("[Resumed]")
+    elif key == pause_key:
+        pause = True
+        print("[Paused]")
+    elif key == exit_key:
+        running = False
+        print("[Exit]")
+
+
+def controls():
+    print("// AutoClicker by Borkabork Studios")
+    print("// - Settings: ")
+    print("\t delay = " + str(delay) + ' sec' + '\n')
+    print("// - Controls:")
+    print("\t Shift = Resume")
+    print("\t Shift key = Pause")
+    print("\t Right arrow Quit = Exit")
+    print("-----------------------------------------------------")
+    print('Press up shift to start ...')
+
+
+def main():
+    lis = Listener(on_press=on_press)
+    lis.start()
+
+    controls()
+    while running:
+        if not pause:
+            pyautogui.press('up')
+            pyautogui.press('right')
+            pyautogui.press('down')
+            pyautogui.press('left')
+    lis.stop()
+if __name__ == "__main__":
+    main()
